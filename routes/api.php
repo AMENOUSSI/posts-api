@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,20 +15,26 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+// Recuperer tous les posts
+Route::get('/posts',[PostController::class,'index']);
 
-Route::get('/posts',[\App\Http\Controllers\Api\PostController::class,'index']);
+
+// Recuperer un post
+Route::get('/posts/show/{post}',[PostController::class,'show']);
 
 // Inscrire un nouvel utilisateur
 
-Route::post('/register',[\App\Http\Controllers\Api\UserController::class,'register']);
-Route::post('/login', [\App\Http\Controllers\Api\UserController::class,'login']);
+Route::post('/register',[UserController::class,'register']);
+
+// Connecter un utilisateur
+Route::post('/login', [UserController::class,'login']);
 
 
 
 Route::middleware('auth:sanctum')->group(function (){
-    Route::post('/posts/create',[\App\Http\Controllers\Api\PostController::class,'store']);
-    Route::put('/posts/edit/{post}',[\App\Http\Controllers\Api\PostController::class,'update']);
-    Route::delete('/posts/delete/{post}',[\App\Http\Controllers\Api\PostController::class,'destroy']);
+    Route::post('/posts/create',[PostController::class,'store']);
+    Route::put('/posts/edit/{post}',[PostController::class,'update']);
+    Route::delete('/posts/delete/{post}',[PostController::class,'destroy']);
 
     //Retourner l'utilisateur actuellement connecte
 

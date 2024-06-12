@@ -78,18 +78,23 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        //
+        try {
+            // Retourner une réponse JSON avec les détails du post
+            return response()->json([
+                'status_code' => 200,
+                'status_message' => 'Post trouvé avec succès',
+                'data' => $post
+            ]);
+
+        } catch (Exception $e){
+            return response()->json($e);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+
+
 
     /**
      * Update the specified resource in storage.
